@@ -1,184 +1,176 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ProTube + FC Mobile Ultimate</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProTubeFC Mobil Full</title>
 <style>
-body { margin:0; background:#0f0f0f; color:white; font-family:Arial; overflow-x:hidden; }
-#loadingScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:black;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:9999;transition:opacity 0.5s ease;}
-#loadingLogo{font-size:42px;font-weight:bold;color:#ff0000;animation:glow 1.5s infinite;}
-@keyframes glow{0%{text-shadow:0 0 4px red;}50%{text-shadow:0 0 18px red;}100%{text-shadow:0 0 4px red;}}
-.topbar{height:60px;background:#202020;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:2px solid #303030;}
-.logo{font-size:26px;font-weight:bold;color:red;}
-.fc-icon{width:40px;height:40px;cursor:pointer;background:url('https://i.imgur.com/11Q7h0R.png') center/cover;border-radius:50%;border:2px solid #444;transition:0.2s;}
-.fc-icon:hover{transform:scale(1.1);}
-.main{display:flex;}
-.sidebar{width:320px;background:#1a1a1a;height:calc(100vh - 60px);overflow-y:auto;padding:15px;border-right:2px solid #222;}
-.categoryTitle{font-size:18px;margin:10px 0;color:#ff4444;border-bottom:1px solid #333;padding-bottom:5px;}
-.videoItem{display:flex;background:#222;margin-bottom:10px;padding:8px;border-radius:8px;cursor:pointer;transition:0.2s;position:relative;}
-.videoItem:hover{background:#333;}
-.thumb{width:120px;height:70px;border-radius:6px;}
-.videoInfo{margin-left:10px;}
-.title{font-size:14px;margin-bottom:5px;}
-.channelName{font-size:12px;opacity:0.7;}
-.videoPreview{position:absolute;top:0;left:130px;width:200px;height:120px;border-radius:8px;display:none;z-index:100;}
-.player{flex:1;padding:20px;position:relative;}
-#playerContainer{position:relative;}
-#controls{width:100%;display:flex;align-items:center;margin-top:5px;}
-#playPause, #rewind, #forward{background:#ff4444;color:white;border:none;padding:5px 10px;margin-right:5px;border-radius:4px;cursor:pointer;}
-#seekBar{flex:1;height:8px;background:#333;border-radius:4px;cursor:pointer;position:relative;}
-#progress{height:100%;background:red;width:0%;border-radius:4px;}
-#searchBox{width:100%;padding:10px;border-radius:8px;border:none;margin-bottom:15px;background:#333;color:white;}
-#fcPanel{position:fixed;top:0;right:-500px;width:500px;height:100%;background:#111;box-shadow:-4px 0 12px black;transition:0.3s;padding:10px;overflow-y:auto;z-index:1000;}
-#closePanel{width:100%;padding:10px;background:red;border:none;color:white;border-radius:8px;cursor:pointer;margin-bottom:10px;}
-.fcPost{border-bottom:1px solid #333;padding:8px;margin-bottom:8px;transition:0.3s;display:flex;align-items:flex-start;}
-.fcPost.highlight{background:#222;}
-.fcDate{font-size:12px;opacity:0.6;}
-.fcContent{font-size:14px;flex:1;}
-.fcLink{color:#1da1f2;text-decoration:none;}
-.fcProfile{width:40px;height:40px;border-radius:50%;margin-right:8px;vertical-align:middle;}
-.moreBtn{color:#1da1f2;cursor:pointer;font-size:12px;}
-.fcThumbnail{width:80px;height:50px;border-radius:6px;margin-left:8px;cursor:pointer;object-fit:cover;}
-#fcModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:none;align-items:center;justify-content:center;z-index:2000;overflow:hidden;}
-#fcModalContent{display:flex;align-items:center;justify-content:center;position:relative;flex-direction:column;}
-#fcModal img, #fcModal video{max-width:90%;max-height:80%;border-radius:12px;}
-#modalPrev, #modalNext, #modalPlayPause{margin:5px;}
-#modalPrev, #modalNext{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,0,0,0.7);border:none;color:white;padding:10px 15px;font-size:18px;cursor:pointer;border-radius:6px;}
-#modalPrev{left:10px;}
-#modalNext{right:10px;}
-#modalPlayPause{position:absolute;bottom:20px;background:rgba(255,0,0,0.7);border:none;color:white;padding:8px 15px;font-size:16px;cursor:pointer;border-radius:6px;}
-@media(max-width:768px){.main{flex-direction:column;}.sidebar{width:100%;height:auto;border-right:none;}.player{padding:10px;}}
+body { margin:0; font-family: Arial, sans-serif; background:#121212; color:#fff; }
+header { height:50px; background:#1E1E1E; display:flex; align-items:center; justify-content:space-between; padding:0 10px; font-size:16px; }
+header button { background:none; border:none; color:#fff; font-size:20px; cursor:pointer; }
+
+#container { display:flex; flex-direction:column; height:calc(100vh - 50px); }
+#topSection { display:flex; flex:1; overflow:hidden; }
+#sidebar { width:100px; background:#1E1E1E; display:flex; flex-direction:column; padding:5px; overflow-y:auto; }
+.channel { margin:5px 0; padding:5px; background:#333; cursor:pointer; text-align:center; border-radius:5px; font-size:12px; }
+.channel:hover { background:#555; }
+
+#videoList { flex:1; overflow-y:auto; background:#181818; padding:5px; display:flex; flex-wrap:wrap; justify-content:center; }
+.videoItem { width:100px; margin:5px; cursor:pointer; text-align:center; font-size:10px; }
+.videoItem img { width:100%; border-radius:5px; }
+.videoItem span { display:block; font-size:10px; margin-top:2px; }
+
+#player { height:200px; background:#000; display:flex; justify-content:center; align-items:center; position:relative; }
+#player iframe { width:100%; height:100%; border:none; }
+
+.modal, .fullscreenVideoModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95);
+    justify-content:center; align-items:center; z-index:1000; overflow-y:auto; padding:10px; }
+.modalContent, .fullscreenContent { background:#222; padding:15px; border-radius:10px; max-width:100%; max-height:90%; }
+.modalContent img, .modalContent video, .modalContent iframe,
+.fullscreenContent img, .fullscreenContent video, .fullscreenContent iframe { max-width:100%; border-radius:5px; }
+.closeModal { float:right; cursor:pointer; font-size:20px; color:#fff; }
+button { padding:5px 10px; margin-top:5px; cursor:pointer; border:none; border-radius:5px; background:#444; color:#fff; }
+.fullscreenBtn { position:absolute; right:10px; top:10px; background:#444; border-radius:5px; padding:5px; cursor:pointer; }
 </style>
 </head>
 <body>
-<div id="loadingScreen"><div id="loadingLogo">ProTube</div></div>
-<div class="topbar"><div class="logo">ProTube</div><div class="fc-icon" onclick="openPanel()"></div></div>
-<div class="main">
-<div class="sidebar">
-<input type="text" id="searchBox" placeholder="Video Ara..." onkeyup="filterVideos()">
-<div id="videoList">Yükleniyor...</div>
+
+<header>
+    <span>ProTubeFC Mobil Full</span>
+    <button id="fcBtn">FC</button>
+</header>
+
+<div id="container">
+    <div id="topSection">
+        <div id="sidebar">
+            <div class="channel" data-id="KralSakirResmi">Kral Şakir</div>
+            <div class="channel" data-id="Enez2">Enez2.0</div>
+            <div class="channel" data-id="TahirKüçükalim">Tahir Küçükalim</div>
+            <div class="channel" data-id="DenizinYapayDünyası">Denizin Yapay Dünyası</div>
+        </div>
+        <div id="videoList"></div>
+    </div>
+    <div id="player">
+        <iframe id="videoPlayer" src="" allowfullscreen></iframe>
+        <button class="fullscreenBtn" id="fsBtn">⤢</button>
+    </div>
 </div>
-<div class="player">
-<div id="playerContainer">
-<div id="player"></div>
-<div id="controls">
-<button id="playPause">▶</button>
-<button id="rewind">⏪10s</button>
-<button id="forward">10s⏩</button>
-<div id="seekBar"><div id="progress"></div></div>
+
+<div id="modal" class="modal">
+    <div class="modalContent">
+        <span class="closeModal" id="closeModal">&times;</span>
+        <div id="fcContent"></div>
+    </div>
 </div>
+
+<div id="fullscreenModal" class="fullscreenVideoModal">
+    <div class="fullscreenContent">
+        <span class="closeModal" id="closeFsModal">&times;</span>
+        <iframe id="fsPlayer" src="" allowfullscreen></iframe>
+    </div>
 </div>
-</div>
-</div>
-<div id="fcPanel">
-<button id="closePanel" onclick="closePanel()">Kapat</button>
-<div id="fcPosts">FC Mobile Gönderileri Yükleniyor...</div>
-</div>
-<div id="fcModal" onclick="closeModal()">
-<div id="fcModalContent">
-<button id="modalPrev" onclick="prevModal(event)">‹</button>
-<button id="modalNext" onclick="nextModal(event)">›</button>
-<button id="modalPlayPause" onclick="toggleModalVideo(event)">▶</button>
-</div>
-</div>
-<script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
-const API_KEY = "AIzaSyC92EJeoj1Tbz5o8A8ih91yEfahfLEsick";
-const channels = [
-  { name: "Kral Şakir", url: "https://www.youtube.com/@KralSakirResmi" },
-  { name: "Enez2.0", url: "https://www.youtube.com/@Enez2" },
-  { name: "Tahir Küçükalim", url: "https://www.youtube.com/@TahirKüçükalim" },
-  { name: "Denizin Yapay Dünyası", url: "https://www.youtube.com/@DenizinYapayDünyası" }
-];
+// --- API Key ve Kanallar ---
+const API_KEY = "AIzaSyC92EJeoj1Tbz5o8A8ih91yEfahfLEsick"; // kendi API keyini buraya koy
+const channels = {
+    "KralSakirResmi":"UCtQvrl_0E7ozHb_c8Fy4oWA",
+    "Enez2":"UCjX50CXBWZWZRqr4J1oW99Q",
+    "TahirKüçükalim":"UCkEldB7OXg-szqFDupWORpQ",
+    "DenizinYapayDünyası":"UCIAas13rjPYryXL6TARwGSg"
+};
 
-let player;
-let currentVideoId = null;
-let modalItems = [];
-let modalIndex = 0;
-let modalVideo=null;
+const fcXLink = "https://x.com/EASFCMOBILE";
 
-function onYouTubeIframeAPIReady(){ player = new YT.Player('player', { height: '500', width: '100%', videoId: '', playerVars: { 'controls': 0, 'rel': 0, 'showinfo': 0 }, events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange } }); }
-function onPlayerReady(event){ updateProgress(); }
-function onPlayerStateChange(event){ if(event.data === YT.PlayerState.ENDED){ document.getElementById('playPause').textContent='▶'; } }
-function playPause(){ if(player.getPlayerState()===YT.PlayerState.PLAYING){ player.pauseVideo(); document.getElementById('playPause').textContent='▶'; } else{ player.playVideo(); document.getElementById('playPause').textContent='⏸'; } }
-function rewind(){ player.seekTo(player.getCurrentTime()-10,true); }
-function forward(){ player.seekTo(player.getCurrentTime()+10,true); }
-function updateProgress(){ if(player && player.getDuration){ let progress = document.getElementById('progress'); let percent = (player.getCurrentTime()/player.getDuration())*100; progress.style.width = percent+'%'; } requestAnimationFrame(updateProgress); }
-document.getElementById('playPause').onclick = playPause;
-document.getElementById('rewind').onclick = rewind;
-document.getElementById('forward').onclick = forward;
-document.getElementById('seekBar').onclick = function(e){ let rect = this.getBoundingClientRect(); let x = e.clientX - rect.left; let percent = x / rect.width; let time = percent * player.getDuration(); player.seekTo(time,true); };
-
-function openPanel(){document.getElementById("fcPanel").style.right="0px"; loadFCPosts();}
-function closePanel(){document.getElementById("fcPanel").style.right="-500px";}
-
-function openModal(content){
-  modalItems = Array.from(document.querySelectorAll('.fcThumbnail'));
-  modalIndex = modalItems.indexOf(content);
-  const modal = document.getElementById('fcModal');
-  const modalContent = document.getElementById('fcModalContent');
-  modalVideo = content.tagName==='VIDEO'?content.cloneNode(true):null;
-  let clone = content.cloneNode(true);
-  clone.style.maxWidth='90%'; clone.style.maxHeight='80%';
-  modalContent.innerHTML=''; modalContent.appendChild(document.getElementById('modalPrev')); modalContent.appendChild(document.getElementById('modalNext')); modalContent.appendChild(document.getElementById('modalPlayPause')); modalContent.appendChild(clone);
-  if(modalVideo) modalVideo.play();
-  modal.style.display='flex';
-}
-function closeModal(){ if(modalVideo) modalVideo.pause(); document.getElementById('fcModal').style.display='none'; }
-function prevModal(e){ e.stopPropagation(); modalIndex = (modalIndex-1+modalItems.length)%modalItems.length; openModal(modalItems[modalIndex]); }
-function nextModal(e){ e.stopPropagation(); modalIndex = (modalIndex+1)%modalItems.length; openModal(modalItems[modalIndex]); }
-function toggleModalVideo(e){ e.stopPropagation(); if(modalVideo){ if(modalVideo.paused){ modalVideo.play(); e.target.textContent='⏸'; }else{ modalVideo.pause(); e.target.textContent='▶'; } } }
-
-async function getChannelID(url){ try{ const html = await (await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url))).text(); const match = html.match(/"channelId":"(.*?)"/); return match ? match[1] : null; }catch(e){return null;} }
-
-async function loadVideos(){
-  const list=document.getElementById("videoList"); list.innerHTML="";
-  for(let ch of channels){
-    let cat=document.createElement("div"); cat.className="categoryTitle"; cat.textContent=ch.name; list.appendChild(cat);
-    const chID = await getChannelID(ch.url); if(!chID) continue;
-    let url=`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${chID}&part=snippet&order=date&maxResults=10`;
-    let response=await fetch(url); let data=await response.json();
-    data.items.forEach(video=>{
-      let title=video.snippet.title; let vid=video.id.videoId; let thumb=video.snippet.thumbnails.high.url;
-      let item=document.createElement("div"); item.className="videoItem";
-      item.onmouseenter=()=>{ let preview = document.createElement('iframe'); preview.src = `https://www.youtube.com/embed/${vid}?autoplay=1&mute=1`; preview.className='videoPreview'; item.appendChild(preview); preview.style.display='block'; };
-      item.onmouseleave=()=>{ let preview = item.querySelector('.videoPreview'); if(preview) preview.remove(); };
-      item.onclick=()=>{ currentVideoId=vid; player.loadVideoById(vid); };
-      item.innerHTML=`<img class='thumb' src='${thumb}'><div class='videoInfo'><div class='title'>${title}</div><div class='channelName'>${ch.name}</div></div>`;
-      list.appendChild(item);
+// --- YouTube videolarını çek ---
+function fetchVideos(channelId){
+    const url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${channelId}&part=snippet,id&order=date&maxResults=10`;
+    fetch(url)
+    .then(res=>res.json())
+    .then(data=>{
+        const list = document.getElementById('videoList');
+        list.innerHTML = "";
+        data.items.forEach(item=>{
+            if(item.id.videoId){
+                const div = document.createElement('div');
+                div.className = 'videoItem';
+                div.innerHTML = `<img src="${item.snippet.thumbnails.medium.url}" /><span>${item.snippet.title}</span>`;
+                div.addEventListener('touchend', ()=>playVideo(item.id.videoId));
+                div.addEventListener('click', ()=>playVideo(item.id.videoId));
+                list.appendChild(div);
+            }
+        });
     });
-  }
-  const loading=document.getElementById("loadingScreen"); loading.style.opacity=0; setTimeout(()=>{loading.style.display="none";},500);
 }
 
-function filterVideos(){ const val=document.getElementById("searchBox").value.toLowerCase(); document.querySelectorAll(".videoItem").forEach(i=>{ i.style.display=i.innerText.toLowerCase().includes(val)?"flex":"none"; }); }
+// --- Video oynatma ---
+function playVideo(videoId){
+    const player = document.getElementById('videoPlayer');
+    const fsPlayer = document.getElementById('fsPlayer');
+    player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    fsPlayer.src = player.src;
+}
 
-const fcURL = "https://x.com/EASFCMOBILE";
-async function loadFCPosts(){
-  const container = document.getElementById("fcPosts"); container.innerHTML = "Yükleniyor...";
-  try{
-    const html = await (await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(fcURL))).text();
-    const tweetMatches = [...html.matchAll(/<article.*?>([\s\S]*?)<\/article>/g)];
-    container.innerHTML = "";
-    tweetMatches.slice(0,10).forEach(match => {
-      let div = document.createElement("div"); div.className = "fcPost highlight";
-      let content = match[1].replace(/<a href=\"(.*?)\".*?>(.*?)<\/a>/g, '<a class="fcLink" href="$1" target="_blank">$2</a>');
-      let imgMatch = content.match(/<img.*?src=\"(.*?)\"/);
-      if(imgMatch){
-        let img = document.createElement('img'); img.src=imgMatch[1]; img.className='fcThumbnail';
-        img.onclick=()=>openModal(img);
-        div.appendChild(img);
-      }
-      div.innerHTML=`<div class='fcContent'>${content}</div>`+div.innerHTML;
-      container.appendChild(div);
+// --- Kanal tıklama ---
+document.querySelectorAll('.channel').forEach(ch=>{
+    ch.addEventListener('touchend', ()=>fetchVideos(ch.dataset.id));
+    ch.addEventListener('click', ()=>fetchVideos(ch.dataset.id));
+});
+
+// --- FC Modal ---
+const fcBtn = document.getElementById('fcBtn');
+const modal = document.getElementById('modal');
+const closeModal = document.getElementById('closeModal');
+const fcContent = document.getElementById('fcContent');
+
+fcBtn.addEventListener('click', ()=>{
+    modal.style.display = "flex";
+    fcContent.innerHTML = "<p>Gönderiler yükleniyor...</p>";
+
+    const posts = [
+        {title:"Güncelleme 1", media:"https://via.placeholder.com/300x200", type:"image"},
+        {title:"Güncelleme 2", media:"https://via.placeholder.com/300x200", type:"image"},
+        {title:"Video Güncelleme", media:"https://www.youtube.com/embed/dQw4w9WgXcQ", type:"video"}
+    ];
+
+    fcContent.innerHTML = "";
+    posts.forEach(post=>{
+        const div = document.createElement('div');
+        div.style.marginBottom = "15px";
+        div.style.cursor = "pointer";
+
+        if(post.type === "image"){
+            div.innerHTML = `<img src="${post.media}" style="max-width:100%; border-radius:5px;"><p>${post.title}</p>`;
+        } else if(post.type === "video"){
+            div.innerHTML = `<p>${post.title}</p><img src="https://img.youtube.com/vi/${post.media.split('/').pop()}/0.jpg" style="max-width:100%; border-radius:5px;">`;
+        }
+
+        div.addEventListener('click', ()=>{
+            if(post.type === "image"){
+                fcContent.innerHTML = `<img src="${post.media}" style="max-width:100%; border-radius:5px;"><p>${post.title}</p><button id="backBtn">Geri</button>`;
+            } else if(post.type === "video"){
+                fcContent.innerHTML = `<iframe width="100%" height="300" src="${post.media}?autoplay=1" frameborder="0" allowfullscreen></iframe><button id="backBtn">Geri</button>`;
+            }
+
+            document.getElementById('backBtn').addEventListener('click', ()=>{
+                fcBtn.click();
+            });
+        });
+
+        fcContent.appendChild(div);
     });
-  }catch(e){container.innerHTML="Gönderiler yüklenemedi.";}
-}
+});
 
-setInterval(()=>{ if(document.getElementById("fcPanel").style.right === "0px") loadFCPosts(); }, 60000);
+closeModal.addEventListener('click', ()=>modal.style.display = "none");
 
-loadVideos();
+// --- Fullscreen video ---
+const fsBtn = document.getElementById('fsBtn');
+const fsModal = document.getElementById('fullscreenModal');
+const closeFsModal = document.getElementById('closeFsModal');
+
+fsBtn.addEventListener('click', ()=> fsModal.style.display = "flex");
+closeFsModal.addEventListener('click', ()=> fsModal.style.display = "none");
 </script>
+
 </body>
 </html>
